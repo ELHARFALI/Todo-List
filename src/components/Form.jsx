@@ -20,9 +20,9 @@ const Form = ({addNewTask, tasks}) => {
             }
             toast.success('The task has been added successfully')
             addNewTask(inputValue)
+            setInputValue(''); // Clear the input value
         }
         
-        return;
     }
 
     const handleChange = (e) => {

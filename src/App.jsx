@@ -8,8 +8,8 @@ import {AiFillDelete} from 'react-icons/ai'
 function App() {
   const [tasks, setTasks] = useState([])
 
-  console.log(tasks);
 
+  // add new task
   const addNewTask = (taskName) => {
     const newTask = {
       name: taskName,
@@ -19,11 +19,19 @@ function App() {
     setTasks([...tasks, newTask])
   }
 
+  // delete task
   const deleteTask = (taskId) => {
     const newTasks = tasks.filter((task) => task.id !== taskId)
     toast.success('The Task Is Removed')
     setTasks(newTasks)
   }
+
+  // change completed boolean in a specific task
+  const handleChange = (id) => {
+    const updateTask = tasks.map((t) => t.id === id ? { ...t, completed: !t.completed } : t)
+    setTasks(updateTask)
+  }
+
 
   return (
     <main className="h-[100vh] w-full bg-gradient-to-r from-cyan-500 to-blue-500 py-10 px-4">
@@ -39,8 +47,10 @@ function App() {
             return (
               <article key={id} className="p-2 bg-[#91D8E4] rounded-md flex items-center justify-between mb-2">
                 <div className="flex items-center gap-5">
-                  <input type="checkbox" checked={completed} />
-                  <h3 className="text-lg md:text-xl font-medium capitalize">{name}</h3>
+                  <input type="checkbox" checked={completed} onChange={() => handleChange(id)}  />
+                  <h3 className="text-lg md:text-xl font-medium capitalize">
+                    {completed ? <s>{name}</s> : name}
+                  </h3>
                 </div>
                 <button type="button" onClick={() => deleteTask(id)} className="bg-red-400 text-white p-1 rounded-md transition-all ease-in-out duration-150 hover:bg-red-600">
                   <AiFillDelete size={25} />
