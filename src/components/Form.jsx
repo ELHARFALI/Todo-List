@@ -2,8 +2,10 @@ import { useRef, useEffect, useState } from "react"
 import { AiOutlineSearch } from 'react-icons/ai'
 
 import {toast} from 'react-toastify'
+import { useGlobalContext } from "../context/context"
 
-const Form = ({addNewTask, tasks}) => {
+const Form = () => {
+    const {tasks, addNewTask} = useGlobalContext()
     const inputRef = useRef(null)
     const [inputValue, setInputValue] = useState('')
 
@@ -20,7 +22,7 @@ const Form = ({addNewTask, tasks}) => {
             }
             toast.success('The task has been added successfully')
             addNewTask(inputValue)
-            setInputValue(''); // Clear the input value
+            inputRef.current.value = '' //Clear the input value
         }
         
     }
